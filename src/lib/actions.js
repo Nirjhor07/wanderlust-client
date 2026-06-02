@@ -33,7 +33,30 @@ export const handleSubmitDestination = async (e) => {
 
 // get details of destination page
 export const getDetailsDestination = async (id) => {
-  const res = await fetch(`http://localhost:8000/tours/${id}`);
+  const uri =
+    process.env.NEXT_PUBLIC_BACKEND_URI || "http://localhost:8000/tours";
+  const res = await fetch(`${uri}/tours/${id}`);
   const data = res.json();
   return data;
+};
+
+// handle destination edit data
+export const handleEditDestination = async (e, _id) => {
+  e.preventDefault();
+  const uri =
+    process.env.NEXT_PUBLIC_BACKEND_URI || "http://localhost:8000/tours";
+
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData.entries());
+  console.log(data);
+  const res = await fetch(`${uri}/tours/${_id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const result = await res.json();
+  // console.log(result);
+  // console.log(data);
 };
