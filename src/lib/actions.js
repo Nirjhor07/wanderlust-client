@@ -30,3 +30,10 @@ export const handleSubmitDestination = async (e) => {
   });
   const result = await res.json();
 };
+
+// get details of destination page
+export const getDetailsDestination = async (id) => {
+  const res = await fetch(`http://localhost:8000/tours/${id}`);
+  const data = res.json();
+  return data;
+};

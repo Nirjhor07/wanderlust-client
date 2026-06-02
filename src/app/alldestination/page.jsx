@@ -1,5 +1,6 @@
 import { getApiActions } from "@/lib/actions";
 import Image from "next/image";
+import Link from "next/link";
 
 const AllDestinationPage = async () => {
   const tours = await getApiActions();
@@ -77,9 +78,14 @@ const AllDestinationPage = async () => {
                     <div className="text-3xl font-bold text-cyan-400">
                       ${tour.price || tour.priceUSD}
                     </div>
-                    <button className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold px-6 py-2 rounded-lg transition-colors duration-300">
+                    <button className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold px-6 py-2 rounded-lg transition-colors duration-300 text-sm">
                       Book Now
                     </button>
+                    <Link href={`/detailsDestination/${tour._id}`}>
+                      <button className="bg-cyan-400 hover:bg-cyan-600 text-white font-semibold px-2 py-2 rounded-lg transition-colors duration-300 text-sm">
+                        Show Details
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
