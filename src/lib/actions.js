@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 export const getApiActions = async () => {
   const baseUri =
     process.env.NEXT_PUBLIC_BACKEND_URI || "http://localhost:8000";
@@ -17,7 +19,6 @@ export const handleSubmitDestination = async (e) => {
   e.preventDefault();
   const uri =
     process.env.NEXT_PUBLIC_BACKEND_URI || "http://localhost:8000/tours";
-
   const formData = new FormData(e.target);
   const data = Object.fromEntries(formData.entries());
   // console.log(data);
@@ -28,6 +29,7 @@ export const handleSubmitDestination = async (e) => {
     },
     body: JSON.stringify(data),
   });
+  redirect("/");
   const result = await res.json();
 };
 

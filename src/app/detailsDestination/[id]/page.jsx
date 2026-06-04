@@ -1,3 +1,4 @@
+import { DeteleDestinations } from "@/Components/DeteleDestinations";
 import EditDetails from "@/Components/EditDetails";
 import { getDetailsDestination } from "@/lib/actions";
 import { Clock, MapPin } from "@gravity-ui/icons";
@@ -22,9 +23,11 @@ const DetailsDestinationPage = async ({ params }) => {
   } = details;
   return (
     <div>
-      <div className="container mx-auto">
+      <div className="container mx-auto gap-2.5 flex">
         <EditDetails details={details} />
+        <DeteleDestinations details={details} />
       </div>
+
       <div className="w-full mx-auto flex justify-center items-center min-h-screen p-4">
         <div className="max-w-2xl rounded-2xl overflow-hidden shadow-lg bg-white border border-slate-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group">
           {/* Image Container */}
@@ -98,5 +101,21 @@ const DetailsDestinationPage = async ({ params }) => {
     </div>
   );
 };
+
+export async function generateStaticParams() {
+  try {
+    const baseUri =
+      process.env.NEXT_PUBLIC_BACKEND_URI || "http://localhost:8000";
+    const res = await fetch(`${baseUri}/tours`);
+    const tours = await res.json();
+
+    return tours.map((tour) => ({
+      id: tour._id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
+}
 
 export default DetailsDestinationPage;
