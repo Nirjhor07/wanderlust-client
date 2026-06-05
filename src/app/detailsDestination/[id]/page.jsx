@@ -1,14 +1,22 @@
 import { DeteleDestinations } from "@/Components/DeteleDestinations";
 import EditDetails from "@/Components/EditDetails";
 import { getDetailsDestination } from "@/lib/actions";
+import { auth } from "@/lib/auth";
+
 import { Clock, MapPin } from "@gravity-ui/icons";
 import { Calendar, Button } from "@heroui/react";
+import { headers } from "next/headers";
 import Image from "next/image";
 
 const DetailsDestinationPage = async ({ params }) => {
   const { id } = await params;
   const details = await getDetailsDestination(id);
   //   console.log(details);
+  //getting the user data
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  console.log(session);
 
   const {
     country,

@@ -14,6 +14,10 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    // Fixed typo: "kesely" -> "kysely"
+    serverComponentsExternalPackages: ["@better-auth/kysely-adapter"],
+  },
 };
 
 export default nextConfig;

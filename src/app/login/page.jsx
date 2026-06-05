@@ -2,26 +2,33 @@
 
 import Link from "next/link";
 import { Input, Button, Card, Checkbox } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const handleLogin = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    const dataaa = Object.fromEntries(formData.entries());
+    const data = Object.fromEntries(formData.entries());
 
     // TODO: Implement actual login logic
-    // console.log("Login attempt:", data.fullName);
-    console.log(dataaa);
-    const { password, imageUrl, fullName, email } = dataaa;
-    console.log(password);
-    // const { data: loginData, error } = await authClient.signUp.email({
-    //   // name: data.fullName,
-    //   // email: "john.doe@example.com", // required
-    //   // password: "password1234", // required
-    //   // image: "https://example.com/image.png",
-    //   // callbackURL: "https://example.com/callback",
-    // });
+    // console.log("Login attempt:", data);
+
+    const { password, imageUrl, fullName, email } = data;
+
+    const { data: loginData, error } = await authClient.signIn.email({
+      email, // required
+      password, // required
+    });
+    if (!error) {
+      alert("logged in succesfully");
+      router.push("/");
+    }
+    if (error) {
+      alert(`${error}`);
+    }
   };
 
   const handleGoogleLogin = () => {

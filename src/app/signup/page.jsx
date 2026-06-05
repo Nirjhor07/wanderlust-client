@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { Input, Button, Card, Checkbox } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+  const router = useRouter();
   const handleSignUp = async (e) => {
     e.preventDefault();
 
@@ -19,7 +21,14 @@ export default function SignUpPage() {
       password,
       image: imageUrl,
     });
-    console.log(loginData);
+    if (!error) {
+      alert("account creatted succesfully");
+      authClient.signOut();
+      router.push("/login");
+    }
+    if (error) {
+      alert(`${error}`);
+    }
   };
 
   const handleGoogleSignUp = () => {
