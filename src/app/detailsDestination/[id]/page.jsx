@@ -1,23 +1,15 @@
+import BookingCard from "@/Components/BookingCard";
 import { DeteleDestinations } from "@/Components/DeteleDestinations";
 import EditDetails from "@/Components/EditDetails";
 import { getDetailsDestination } from "@/lib/actions";
-import { auth } from "@/lib/auth";
-
 import { Clock, MapPin } from "@gravity-ui/icons";
 import { Calendar, Button } from "@heroui/react";
-import { headers } from "next/headers";
 import Image from "next/image";
 
 const DetailsDestinationPage = async ({ params }) => {
   const { id } = await params;
   const details = await getDetailsDestination(id);
   //   console.log(details);
-  //getting the user data
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  console.log(session);
-
   const {
     country,
     category,
@@ -29,6 +21,7 @@ const DetailsDestinationPage = async ({ params }) => {
     imageUrl,
     price,
   } = details;
+
   return (
     <div>
       <div className="container mx-auto gap-2.5 flex">
@@ -99,10 +92,8 @@ const DetailsDestinationPage = async ({ params }) => {
           </div>
 
           {/* Action Button */}
-          <div className="px-6 pb-6">
-            <button className="w-full bg-slate-900 hover:bg-indigo-600 text-white font-medium py-2.5 px-4 rounded-xl transition-colors duration-200 shadow-sm text-sm">
-              Book Now
-            </button>
+          <div className="px-6 pb-6 flex items-center justify-center">
+            <BookingCard details={details} />
           </div>
         </div>
       </div>
@@ -110,20 +101,20 @@ const DetailsDestinationPage = async ({ params }) => {
   );
 };
 
-export async function generateStaticParams() {
-  try {
-    const baseUri =
-      process.env.NEXT_PUBLIC_BACKEND_URI || "http://localhost:8000";
-    const res = await fetch(`${baseUri}/tours`);
-    const tours = await res.json();
+// export async function generateStaticParams() {
+//   try {
+//     const baseUri =
+//       process.env.NEXT_PUBLIC_BACKEND_URI || "http://localhost:8000";
+//     const res = await fetch(`${baseUri}/tours`);
+//     const tours = await res.json();
 
-    return tours.map((tour) => ({
-      id: tour._id.toString(),
-    }));
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    return [];
-  }
-}
+//     return tours.map((tour) => ({
+//       id: tour._id.toString(),
+//     }));
+//   } catch (error) {
+//     console.error("Error generating static params:", error);
+//     return [];
+//   }
+// }
 
 export default DetailsDestinationPage;

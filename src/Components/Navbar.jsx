@@ -9,7 +9,7 @@ const Navbar = () => {
   const handleLogoutBtn = async () => {
     await authClient.signOut();
   };
-
+  //getting session data
   const { data: session } = authClient.useSession();
   // console.log(session);
   return (
