@@ -101,20 +101,4 @@ const DetailsDestinationPage = async ({ params }) => {
   );
 };
 
-// export async function generateStaticParams() {
-//   try {
-//     const baseUri =
-//       process.env.NEXT_PUBLIC_BACKEND_URI || "http://localhost:8000";
-//     const res = await fetch(`${baseUri}/tours`);
-//     const tours = await res.json();
-
-//     return tours.map((tour) => ({
-//       id: tour._id.toString(),
-//     }));
-//   } catch (error) {
-//     console.error("Error generating static params:", error);
-//     return [];
-//   }
-// }
-
 export default DetailsDestinationPage;

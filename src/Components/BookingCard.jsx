@@ -2,7 +2,6 @@
 
 import { authClient } from "@/lib/auth-client";
 import { Card, Input, Button } from "@heroui/react";
-import { date, email } from "better-auth";
 import { useState } from "react";
 
 export default function BookingCard({ details }) {
