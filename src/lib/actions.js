@@ -34,10 +34,14 @@ export const handleSubmitDestination = async (e) => {
 };
 
 // get details of destination page
-export const getDetailsDestination = async (id) => {
+export const getDetailsDestination = async (id, token) => {
   const uri =
     process.env.NEXT_PUBLIC_BACKEND_URI || "http://localhost:8000/tours";
-  const res = await fetch(`${uri}/tours/${id}`);
+  const res = await fetch(`${uri}/tours/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const data = res.json();
   return data;
 };

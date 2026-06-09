@@ -2,13 +2,19 @@ import BookingCard from "@/Components/BookingCard";
 import { DeteleDestinations } from "@/Components/DeteleDestinations";
 import EditDetails from "@/Components/EditDetails";
 import { getDetailsDestination } from "@/lib/actions";
+import { auth } from "@/lib/auth";
 import { Clock, MapPin } from "@gravity-ui/icons";
 import { Calendar, Button } from "@heroui/react";
+import { headers } from "next/headers";
 import Image from "next/image";
 
 const DetailsDestinationPage = async ({ params }) => {
   const { id } = await params;
-  const details = await getDetailsDestination(id);
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
+  const details = await getDetailsDestination(id, token);
   //   console.log(details);
   const {
     country,
